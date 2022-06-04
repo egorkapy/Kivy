@@ -18,7 +18,7 @@ class Light(Scatter):
 class Cat(Widget):
 
     def start(self):
-        self.cat = Rectangle(source='black_cat.png', size=self.size)
+        self.cat = Rectangle(source='img/black_cat.png', size=self.size)
 
         self.canvas.add(self.cat)
 
