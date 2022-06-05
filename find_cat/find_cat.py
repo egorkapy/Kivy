@@ -17,13 +17,14 @@ class Light(Scatter):
 
 
 # https://kivy.org/doc/stable/api-kivy.graphics.svg.html
+# https://github.com/kivy/kivy
 # https://github.com/kivy/kivy/blob/master/examples/svg/main.py
 # https://stackoverflow.com/questions/65332722/extremely-bad-svg-quality-kivy
 class Cat(Widget):
 
     def start(self):
-        # self.cat = Rectangle(source='img/black_cat.png', size=self.size)
-        self.cat = Svg(source='source/black_cat.svg')
+        # self.cat = Svg('./img/black_cat.svg')
+        self.cat = Rectangle(source='./img/black_cat.png', size=self.size)
 
         self.canvas.add(self.cat)
 
