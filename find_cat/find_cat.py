@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.graphics import Rectangle
+from kivy.graphics.svg import Svg
 from kivy.uix.scatter import Scatter
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.lang.builder import Builder
@@ -15,10 +16,14 @@ class Light(Scatter):
     pass
 
 
+# https://kivy.org/doc/stable/api-kivy.graphics.svg.html
+# https://github.com/kivy/kivy/blob/master/examples/svg/main.py
+# https://stackoverflow.com/questions/65332722/extremely-bad-svg-quality-kivy
 class Cat(Widget):
 
     def start(self):
-        self.cat = Rectangle(source='img/black_cat.png', size=self.size)
+        # self.cat = Rectangle(source='img/black_cat.png', size=self.size)
+        self.cat = Svg(source='source/black_cat.svg')
 
         self.canvas.add(self.cat)
 
