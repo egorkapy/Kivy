@@ -27,7 +27,6 @@ class SvgWidget(Scatter):
             svg = Svg(filename)
         self.size = svg.width, svg.height
 
-# TODO - https://stackoverflow.com/questions/64530648/scale-with-kivy-scatterlayout-doesnt-behave-as-expected
 class Light(Scatter):
     pass
 
