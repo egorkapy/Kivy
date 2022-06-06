@@ -27,16 +27,12 @@ class SvgWidget(Scatter):
             svg = Svg(filename)
         self.size = svg.width, svg.height
 
-
+# TODO - https://stackoverflow.com/questions/64530648/scale-with-kivy-scatterlayout-doesnt-behave-as-expected
 class Light(Scatter):
     pass
 
 
-# https://kivy.org/doc/stable/api-kivy.graphics.svg.html
-# https://github.com/kivy/kivy
-# https://github.com/kivy/kivy/blob/master/examples/svg/main.py
-# https://stackoverflow.com/questions/65332722/extremely-bad-svg-quality-kivy
-class Cat(Widget):
+class Cat(SvgWidget):
 
     def on_touch_move(self, touch):
         print(f'Touch: {touch}')
@@ -47,12 +43,11 @@ class GameApp(App):
     def build(self):
         self.layout = FloatLayout()
         self.light = Light()
-        self.cat = Cat()
 
         self.layout.add_widget(self.light)
 
         for cat_id in range(1, 4):
-            svg = SvgWidget('./img/black_cat.svg', size_hint=(None, None))
+            svg = Cat('./img/black_cat.svg', size_hint=(None, None))
             self.layout.add_widget(svg)
             svg.scale = 1
             svg.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
