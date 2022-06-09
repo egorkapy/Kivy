@@ -34,10 +34,13 @@ class Light(Scatter):
 
 
 class Cat(SvgWidget):
-    def __init__(self, filename, **kwargs):
-        super(Cat, self).__init__(filename, **kwargs)
+    def __init__(self, filename, light, **kwargs):
+        super(Cat, self).__init__(filename, **kwargs)                
 
-        Clock.schedule_interval(self.my_callback, 0)
+        while self.collide_widget(light):
+            self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
+
+        Clock.schedule_interval(self.my_callback, .01)
 
     def my_callback(self, *args):
         if self.collide_point(Window.mouse_pos[0], Window.mouse_pos[1]):
@@ -53,7 +56,7 @@ class GameApp(App):
         self.layout.add_widget(self.light)
 
         for cat_id in range(1, 4):
-            svg = Cat('./img/black_cat.svg', size_hint=(None, None))
+            svg = Cat('./img/black_cat.svg', self.light, size_hint=(None, None))
             self.layout.add_widget(svg)
             svg.scale = 1
             svg.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
