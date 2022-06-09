@@ -5,6 +5,7 @@ from kivy.uix.scatter import Scatter
 from kivy.uix.floatlayout import FloatLayout
 from kivy.lang.builder import Builder
 from kivy.core.window import Window
+from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
 # White background for testing the app
@@ -27,14 +28,20 @@ class SvgWidget(Scatter):
             svg = Svg(filename)
         self.size = svg.width, svg.height
 
+
 class Light(Scatter):
     pass
 
 
 class Cat(SvgWidget):
+    def __init__(self, filename, **kwargs):
+        super(Cat, self).__init__(filename, **kwargs)
 
-    def on_touch_move(self, touch):
-        print(f'Touch: {touch}')
+        Clock.schedule_interval(self.my_callback, 0)
+
+    def my_callback(self, *args):
+        if self.collide_point(Window.mouse_pos[0], Window.mouse_pos[1]):
+            self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
 
 
 class GameApp(App):
