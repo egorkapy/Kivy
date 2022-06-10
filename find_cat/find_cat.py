@@ -34,16 +34,25 @@ class Light(Scatter):
 
 
 class Cat(SvgWidget):
+    cats = list()
+
     def __init__(self, filename, light, **kwargs):
-        super(Cat, self).__init__(filename, **kwargs)                
+        super(Cat, self).__init__(filename, **kwargs)
+
+        Cat.cats.append(self)
 
         while self.collide_widget(light):
             self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
 
-        Clock.schedule_interval(self.my_callback, .01)
+        Clock.schedule_interval(self.touch, .01)
 
-    def my_callback(self, *args):
-        if self.collide_point(Window.mouse_pos[0], Window.mouse_pos[1]):
+    def touch(self, *args):
+        cats = Cat.cats.copy()
+
+        del cats[cats.index(self)]
+        
+        if self.collide_point(Window.mouse_pos[0], Window.mouse_pos[1]) or\
+                self.collide_widget(cats[0]) or self.collide_widget(cats[1]):
             self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
 
 
