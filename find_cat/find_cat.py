@@ -11,8 +11,8 @@ from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
 # White background for testing the app
-Window.clearcolor = 0, 0, 0, 0
-# Window.clearcolor = 1, 1, 1, 1
+# Window.clearcolor = 0, 0, 0, 0
+Window.clearcolor = 1, 1, 1, 1
 
 CAT_SIZE = 50
 WINDOW_WIDTH = 400
@@ -26,8 +26,10 @@ class SvgWidget(Scatter):
 
     def __init__(self, filename, **kwargs):
         super(SvgWidget, self).__init__(**kwargs)
+
         with self.canvas:
             svg = Svg(filename)
+
         self.size = svg.width, svg.height
 
 
@@ -42,12 +44,14 @@ class Cat(SvgWidget):
     def __init__(self, filename, light, score_label, **kwargs):
         super(Cat, self).__init__(filename, **kwargs)
 
+        self.light = light
+
+        while self.collide_widget(self.light):
+            self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
+
         self.score_label = score_label
 
         Cat.cats.append(self)
-
-        while self.collide_widget(light):
-            self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
 
         Clock.schedule_interval(self.touch, .01)
 
@@ -61,7 +65,8 @@ class Cat(SvgWidget):
             Cat.score += 1
             self.score_label.text = f'Score = {str(Cat.score)}'
 
-        elif self.collide_widget(cats[0]) or self.collide_widget(cats[1]):
+        if self.collide_widget(cats[0]) or self.collide_widget(cats[1])\
+                or (self.collide_widget(self.light) and self.light.pos == (0.0, 0.0)):
             self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
 
 
@@ -71,7 +76,6 @@ class GameApp(App):
         self.layout = FloatLayout()
         self.light = Light()
         self.score_label = Label(text='Score = 0', pos=(-120, 240), color=(0, 1, 1, 1))
-
         self.layout.add_widget(self.light)
 
         for cat_id in range(1, 4):
