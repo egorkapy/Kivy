@@ -1,7 +1,6 @@
 from random import randint
 from kivy.app import App
 from kivy.graphics.svg import Svg
-from kivy.properties import NumericProperty
 from kivy.uix.label import Label
 from kivy.uix.scatter import Scatter
 from kivy.uix.floatlayout import FloatLayout
@@ -11,13 +10,20 @@ from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
 # White background for testing the app
-# Window.clearcolor = 0, 0, 0, 0
-Window.clearcolor = 1, 1, 1, 1
+Window.clearcolor = 0, 0, 0, 0
+# Window.clearcolor = 1, 1, 1, 1
 
 CAT_SIZE = 50
 WINDOW_WIDTH = 400
 WINDOW_HEIGHT = 600
+score = 0
+
 Window.size = WINDOW_WIDTH, WINDOW_HEIGHT
+
+
+def cat_random_position():
+    return randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
+
 
 Builder.load_file('sprites.kv')
 
@@ -38,36 +44,34 @@ class Light(Scatter):
 
 
 class Cat(SvgWidget):
-    score = 0
     cats = list()
 
     def __init__(self, filename, light, score_label, **kwargs):
         super(Cat, self).__init__(filename, **kwargs)
 
         self.light = light
-
-        while self.collide_widget(self.light):
-            self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
-
         self.score_label = score_label
 
         Cat.cats.append(self)
 
-        Clock.schedule_interval(self.touch, .01)
+        Clock.schedule_interval(self.touch, 0)
 
     def touch(self, *args):
-        cats = Cat.cats.copy()
+        global score
 
-        del cats[cats.index(self)]
+        cats_neighbors = Cat.cats.copy()
 
-        if self.collide_point(Window.mouse_pos[0], Window.mouse_pos[1]):
-            self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
-            Cat.score += 1
-            self.score_label.text = f'Score = {str(Cat.score)}'
+        del cats_neighbors[cats_neighbors.index(self)]
 
-        if self.collide_widget(cats[0]) or self.collide_widget(cats[1])\
-                or (self.collide_widget(self.light) and self.light.pos == (0.0, 0.0)):
-            self.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
+        if self.collide_widget(cats_neighbors[0]) \
+                or self.collide_widget(cats_neighbors[1]) \
+                or self.collide_widget(self.light):
+
+            self.center = cat_random_position()
+
+            if not self.light.pos == (0.0, 0.0):
+                score += 1
+                self.score_label.text = f'Score = {str(score)}'
 
 
 class GameApp(App):
@@ -82,7 +86,7 @@ class GameApp(App):
             svg = Cat('./img/black_cat.svg', self.light, self.score_label, size_hint=(None, None))
             self.layout.add_widget(svg)
             svg.scale = 1
-            svg.center = randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
+            svg.center = cat_random_position()
 
         self.layout.add_widget(self.score_label)
 
