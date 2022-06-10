@@ -10,8 +10,8 @@ from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
 # White background for testing the app
-Window.clearcolor = 0, 0, 0, 0
-# Window.clearcolor = 1, 1, 1, 1
+# Window.clearcolor = 0, 0, 0, 0
+Window.clearcolor = 1, 1, 1, 1
 
 CAT_SIZE = 50
 WINDOW_WIDTH = 400
@@ -41,6 +41,13 @@ class SvgWidget(Scatter):
 
 class Light(Scatter):
     pass
+
+
+# TODO
+class SubWidget(Widget):
+    def on_touch_move(self, touch):
+        self.center_x, self.center_y = (touch.x, touch.y)
+        print(touch.x, touch.y)
 
 
 class Cat(SvgWidget):
@@ -79,11 +86,13 @@ class GameApp(App):
     def build(self):
         self.layout = FloatLayout()
         self.light = Light()
+        self.sub_light = SubWidget()
         self.score_label = Label(text='Score = 0', pos=(-120, 240), color=(0, 1, 1, 1))
         self.layout.add_widget(self.light)
+        self.layout.add_widget(self.sub_light)
 
         for cat_id in range(1, 4):
-            svg = Cat('./img/black_cat.svg', self.light, self.score_label, size_hint=(None, None))
+            svg = Cat('./img/black_cat.svg', self.sub_light, self.score_label, size_hint=(None, None))
             self.layout.add_widget(svg)
             svg.scale = 1
             svg.center = cat_random_position()
