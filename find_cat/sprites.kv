@@ -1,4 +1,5 @@
 <SvgWidget>:
+    do_scale: False
     do_rotation: False
 
 <Light>:
@@ -12,16 +13,14 @@
         Rectangle:
             source: './img/light.png'
             size:self.size
-    BoxLayout:
-        SubWidget:
 
-<SubWidget>:
-    pos: root.width/2 , root.height/2
+<SubLight>:
+    pos: root.width/2, root.height/2
     size_hint: None, None
-    size: 50, 50
+    size: 25, 25
     canvas:
         Color:
             rgb: 1,0,0
-        Rectangle:
+        Ellipse:
             pos: self.pos
             size:self.size
