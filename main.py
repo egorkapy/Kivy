@@ -1,20 +1,16 @@
-from kivy.app import App
-from kivy.uix.button import Button
+# This is a sample Python script.
+
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-class MainApp(App):
-    def build(self):
-        button = Button(text='Hello from Kivy',
-                        size_hint=(.5, .5),
-                        pos_hint={'center_x': .3, 'center_y': .7})
-        button.bind(on_press=self.on_press_button)
-
-        return button
-
-    def on_press_button(self, instance):
-        print(instance.text)
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 
+# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    app = MainApp()
-    app.run()
+    print_hi('PyCharm')
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/

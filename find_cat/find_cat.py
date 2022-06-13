@@ -8,12 +8,14 @@ from kivy.lang.builder import Builder
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
+from math import hypot
 
 # White background for testing the app
 # Window.clearcolor = 0, 0, 0, 0
 Window.clearcolor = 1, 1, 1, 1
 
-CAT_SIZE = 50
+CAT_WIDTH = 95
+CAT_HEIGHT = 100
 WINDOW_WIDTH = 400
 WINDOW_HEIGHT = 600
 score = 0
@@ -22,7 +24,7 @@ Window.size = WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 def cat_random_position():
-    return randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
+    return randint(CAT_WIDTH//2, WINDOW_WIDTH - CAT_WIDTH//2), randint(CAT_HEIGHT//2, WINDOW_HEIGHT - CAT_HEIGHT//2)
 
 
 Builder.load_file('sprites.kv')
@@ -44,10 +46,15 @@ class SvgWidget(Scatter):
 
 
 class Light(Scatter):
+    radius = 100
+
     def __init__(self, sub_light: Widget, **kwargs):
         super(Light, self).__init__(**kwargs)
 
         self.sub_light = sub_light
+        self.hypot = hypot(CAT_WIDTH//2, CAT_HEIGHT//2) + hypot(self.radius // 2, self.radius // 2)
+
+        print(self.hypot)
 
         Clock.schedule_interval(self.update, .01)
 
@@ -64,16 +71,16 @@ class SubLight(Widget):
     def on_touch_move(self, touch):
         self.center_x, self.center_y = (touch.x, touch.y)
 
-        print(touch.x, touch.y)
+        # print(touch.x, touch.y)
 
 
 class Cat(SvgWidget):
     cats = list()
 
-    def __init__(self, filename, light, score_label, **kwargs):
+    def __init__(self, filename, sublight, score_label, **kwargs):
         super(Cat, self).__init__(filename, **kwargs)
 
-        self.light = light
+        self.sublight = sublight
         self.score_label = score_label
 
         Cat.cats.append(self)
@@ -89,11 +96,11 @@ class Cat(SvgWidget):
 
         if self.collide_widget(cats_neighbors[0]) \
                 or self.collide_widget(cats_neighbors[1]) \
-                or self.collide_widget(self.light):
+                or self.collide_widget(self.sublight):
 
             self.center = cat_random_position()
 
-            if not self.light.pos == (0.0, 0.0):
+            if not self.sublight.pos == (0.0, 0.0):
                 score += 1
                 self.score_label.text = f'Score = {str(score)}'
 
