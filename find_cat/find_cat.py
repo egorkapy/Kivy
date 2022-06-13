@@ -18,14 +18,18 @@ WINDOW_WIDTH = 400
 WINDOW_HEIGHT = 600
 CAT_WIDTH = 95
 CAT_HEIGHT = 100
+LEFT_WINDOW_PADDING = CAT_WIDTH // 2
+RIGHT_WINDOW_PADDING = WINDOW_WIDTH - CAT_WIDTH // 2
+BOTTOM_WINDOW_PADDING = CAT_HEIGHT // 2
+TOP_WINDOW_PADDING = WINDOW_HEIGHT - CAT_HEIGHT // 2
 score = 0
 
 Window.size = WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 def cat_random_position():
-    random_x = randint(CAT_WIDTH // 2, WINDOW_WIDTH - CAT_WIDTH // 2)
-    random_y = randint(CAT_HEIGHT // 2, WINDOW_HEIGHT - CAT_HEIGHT // 2)
+    random_x = randint(LEFT_WINDOW_PADDING, RIGHT_WINDOW_PADDING)
+    random_y = randint(BOTTOM_WINDOW_PADDING, TOP_WINDOW_PADDING)
 
     return random_x, random_y
 
@@ -55,9 +59,6 @@ class Light(Scatter):
         super(Light, self).__init__(**kwargs)
 
         self.sub_light = sub_light
-        self.hypot = hypot(CAT_WIDTH // 2, CAT_HEIGHT // 2) + hypot(self.radius // 2, self.radius // 2)
-
-        print(self.hypot)
 
         Clock.schedule_interval(self.update, .01)
 
@@ -115,6 +116,9 @@ class GameApp(App):
         self.sub_light = SubLight()
         self.light = Light(self.sub_light)
         self.score_label = Label(text='Score = 0', pos=(-120, 240), color=(0, 1, 1, 1))
+
+        print(self.light.center)
+        print(self.sub_light.center)
 
         self.layout.add_widget(self.light)
         self.layout.add_widget(self.sub_light)
