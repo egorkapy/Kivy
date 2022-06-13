@@ -14,17 +14,20 @@ from math import hypot
 # Window.clearcolor = 0, 0, 0, 0
 Window.clearcolor = 1, 1, 1, 1
 
-CAT_WIDTH = 95
-CAT_HEIGHT = 100
 WINDOW_WIDTH = 400
 WINDOW_HEIGHT = 600
+CAT_WIDTH = 95
+CAT_HEIGHT = 100
 score = 0
 
 Window.size = WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 def cat_random_position():
-    return randint(CAT_WIDTH//2, WINDOW_WIDTH - CAT_WIDTH//2), randint(CAT_HEIGHT//2, WINDOW_HEIGHT - CAT_HEIGHT//2)
+    random_x = randint(CAT_WIDTH // 2, WINDOW_WIDTH - CAT_WIDTH // 2)
+    random_y = randint(CAT_HEIGHT // 2, WINDOW_HEIGHT - CAT_HEIGHT // 2)
+
+    return random_x, random_y
 
 
 Builder.load_file('sprites.kv')
@@ -52,7 +55,7 @@ class Light(Scatter):
         super(Light, self).__init__(**kwargs)
 
         self.sub_light = sub_light
-        self.hypot = hypot(CAT_WIDTH//2, CAT_HEIGHT//2) + hypot(self.radius // 2, self.radius // 2)
+        self.hypot = hypot(CAT_WIDTH // 2, CAT_HEIGHT // 2) + hypot(self.radius // 2, self.radius // 2)
 
         print(self.hypot)
 
@@ -117,10 +120,10 @@ class GameApp(App):
         self.layout.add_widget(self.sub_light)
 
         for cat_id in range(1, 4):
-            svg = Cat('./img/black_cat.svg', self.sub_light, self.score_label, size_hint=(None, None))
-            self.layout.add_widget(svg)
-            svg.scale = 1
-            svg.center = cat_random_position()
+            cat = Cat('./img/black_cat.svg', self.sub_light, self.score_label, size_hint=(None, None))
+            self.layout.add_widget(cat)
+            cat.scale = 1
+            cat.center = cat_random_position()
 
         self.layout.add_widget(self.score_label)
 
