@@ -8,9 +8,9 @@
     do_scale: False
     auto_bring_to_front: False
     size_hint: None, None
-    size: 100, 100
+    size: self.radius, self.radius
     canvas:
-        Rectangle:
+        Ellipse:
             source: './img/light.png'
             size:self.size
 

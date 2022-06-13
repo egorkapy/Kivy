@@ -13,16 +13,20 @@ from kivy.uix.widget import Widget
 # Window.clearcolor = 0, 0, 0, 0
 Window.clearcolor = 1, 1, 1, 1
 
-CAT_SIZE = 50
 WINDOW_WIDTH = 400
 WINDOW_HEIGHT = 600
+CAT_WIDTH = 95
+CAT_HEIGHT = 100
 score = 0
 
 Window.size = WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 def cat_random_position():
-    return randint(CAT_SIZE, WINDOW_WIDTH - CAT_SIZE), randint(CAT_SIZE, WINDOW_HEIGHT - CAT_SIZE)
+    random_x = randint(CAT_WIDTH//2, WINDOW_WIDTH - CAT_WIDTH//2)
+    random_y = randint(CAT_HEIGHT//2, WINDOW_HEIGHT - CAT_HEIGHT//2)
+
+    return random_x, random_y
 
 
 Builder.load_file('sprites.kv')
@@ -44,6 +48,8 @@ class SvgWidget(Scatter):
 
 
 class Light(Scatter):
+    radius = 100
+
     def __init__(self, sub_light: Widget, **kwargs):
         super(Light, self).__init__(**kwargs)
 
@@ -110,10 +116,13 @@ class GameApp(App):
         self.layout.add_widget(self.sub_light)
 
         for cat_id in range(1, 4):
-            svg = Cat('./img/black_cat.svg', self.sub_light, self.score_label, size_hint=(None, None))
-            self.layout.add_widget(svg)
-            svg.scale = 1
-            svg.center = cat_random_position()
+            cat = Cat('./img/black_cat.svg', self.sub_light, self.score_label, size_hint=(None, None))
+            self.layout.add_widget(cat)
+            cat.scale = 1
+            cat.center = cat_random_position()
+
+            # TODO - debug
+            print(cat.size)
 
         self.layout.add_widget(self.score_label)
 
