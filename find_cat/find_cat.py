@@ -60,7 +60,7 @@ class Light(Scatter):
 
         self.sub_light = sub_light
 
-        Clock.schedule_interval(self.update, .01)
+        Clock.schedule_interval(self.update, 0)
 
     def update(self, *args):
         self.center = self.sub_light.center
@@ -75,16 +75,14 @@ class SubLight(Widget):
     def on_touch_move(self, touch):
         self.center_x, self.center_y = (touch.x, touch.y)
 
-        # print(touch.x, touch.y)
-
 
 class Cat(SvgWidget):
     cats = list()
 
-    def __init__(self, filename, sublight, score_label, **kwargs):
+    def __init__(self, filename, sub_light, score_label, **kwargs):
         super(Cat, self).__init__(filename, **kwargs)
 
-        self.sublight = sublight
+        self.sub_light = sub_light
         self.score_label = score_label
 
         Cat.cats.append(self)
@@ -100,11 +98,11 @@ class Cat(SvgWidget):
 
         if self.collide_widget(cats_neighbors[0]) \
                 or self.collide_widget(cats_neighbors[1]) \
-                or self.collide_widget(self.sublight):
+                or self.collide_widget(self.sub_light):
 
             self.center = cat_random_position()
 
-            if not self.sublight.pos == (0.0, 0.0):
+            if not self.sub_light.pos == (0.0, 0.0):
                 score += 1
                 self.score_label.text = f'Score = {str(score)}'
 
@@ -117,9 +115,6 @@ class GameApp(App):
         self.sub_light = SubLight()
         self.light = Light(self.sub_light)
         self.score_label = Label(text='Score = 0', pos=(-120, 240), color=(0, 1, 1, 1))
-
-        print(self.light.center)
-        print(self.sub_light.center)
 
         self.layout.add_widget(self.light)
         self.layout.add_widget(self.sub_light)
