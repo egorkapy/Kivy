@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choice
 from kivy.app import App
 from kivy.graphics.svg import Svg
 from kivy.uix.label import Label
@@ -18,18 +18,49 @@ WINDOW_WIDTH = 400
 WINDOW_HEIGHT = 600
 CAT_WIDTH = 95
 CAT_HEIGHT = 100
-LEFT_WINDOW_PADDING = CAT_WIDTH // 2
-RIGHT_WINDOW_PADDING = WINDOW_WIDTH - CAT_WIDTH // 2
-BOTTOM_WINDOW_PADDING = CAT_HEIGHT // 2
-TOP_WINDOW_PADDING = WINDOW_HEIGHT - CAT_HEIGHT // 2
+HALF_CAT_WIDTH = CAT_WIDTH // 2
+RIGHT_WINDOW_BOUND = WINDOW_WIDTH - CAT_WIDTH // 2
+HALF_CAT_HEIGHT = CAT_HEIGHT // 2
+TOP_WINDOW_BOUND = WINDOW_HEIGHT - CAT_HEIGHT // 2
+LIGHT_RADIUS = 100
+SAFE_DISTANCE = round(hypot((HALF_CAT_WIDTH + LIGHT_RADIUS // 2), (HALF_CAT_HEIGHT + LIGHT_RADIUS // 2))) + 10
+
 score = 0
 
 Window.size = WINDOW_WIDTH, WINDOW_HEIGHT
 
 
-def cat_random_position():
-    random_x = randint(LEFT_WINDOW_PADDING, RIGHT_WINDOW_PADDING)
-    random_y = randint(BOTTOM_WINDOW_PADDING, TOP_WINDOW_PADDING)
+def cat_random_position(light_center_x, light_center_y):
+    light_center_x = int(light_center_x)
+    light_center_y = int(light_center_y)
+
+    light_bound_left = light_center_x - SAFE_DISTANCE
+    light_bound_right = light_center_x + SAFE_DISTANCE
+    light_bound_bottom = light_center_y - SAFE_DISTANCE
+    light_bound_top = light_center_y + SAFE_DISTANCE
+
+    if light_bound_left > HALF_CAT_WIDTH:
+        random_x_left = randint(HALF_CAT_WIDTH, light_bound_left)
+    else:
+        random_x_left = randint(light_center_x + SAFE_DISTANCE, RIGHT_WINDOW_BOUND)
+
+    if light_bound_right < RIGHT_WINDOW_BOUND:
+        random_x_right = randint(light_bound_right, RIGHT_WINDOW_BOUND)
+    else:
+        random_x_right = randint(HALF_CAT_WIDTH, light_center_x - SAFE_DISTANCE)
+
+    if light_bound_bottom > HALF_CAT_HEIGHT:
+        random_y_bottom = randint(HALF_CAT_HEIGHT, light_bound_bottom)
+    else:
+        random_y_bottom = randint(light_center_y + SAFE_DISTANCE, TOP_WINDOW_BOUND)
+
+    if light_bound_top < TOP_WINDOW_BOUND:
+        random_y_top = randint(light_bound_top, TOP_WINDOW_BOUND)
+    else:
+        random_y_top = randint(HALF_CAT_HEIGHT, light_center_y - SAFE_DISTANCE)
+
+    random_x = choice([random_x_left, random_x_right])
+    random_y = choice([random_y_bottom, random_y_top])
 
     return random_x, random_y
 
@@ -53,7 +84,7 @@ class SvgWidget(Scatter):
 
 
 class Light(Scatter):
-    radius = 100
+    radius = LIGHT_RADIUS
 
     def __init__(self, sub_light: Widget, **kwargs):
         super(Light, self).__init__(**kwargs)
@@ -96,15 +127,13 @@ class Cat(SvgWidget):
 
         del cats_neighbors[cats_neighbors.index(self)]
 
-        if self.collide_widget(cats_neighbors[0]) \
-                or self.collide_widget(cats_neighbors[1]) \
-                or self.collide_widget(self.sub_light):
+        if self.collide_widget(cats_neighbors[0]) or self.collide_widget(cats_neighbors[1]):
+            self.center = cat_random_position(self.sub_light.center_x, self.sub_light.center_y)
 
-            self.center = cat_random_position()
-
-            if not self.sub_light.pos == (0.0, 0.0):
-                score += 1
-                self.score_label.text = f'Score = {str(score)}'
+        if self.collide_widget(self.sub_light):
+            self.center = cat_random_position(self.sub_light.center_x, self.sub_light.center_y)
+            score += 1
+            self.score_label.text = f'Score = {str(score)}'
 
 
 class GameApp(App):
@@ -123,7 +152,7 @@ class GameApp(App):
             cat = Cat('./img/black_cat.svg', self.sub_light, self.score_label, size_hint=(None, None))
             self.layout.add_widget(cat)
             cat.scale = 1
-            cat.center = cat_random_position()
+            cat.center = cat_random_position(self.sub_light.center_x, self.sub_light.center_y)
 
         self.layout.add_widget(self.score_label)
 
