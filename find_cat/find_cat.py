@@ -23,37 +23,49 @@ SAFE_DISTANCE = round(hypot((HALF_CAT_WIDTH + LIGHT_RADIUS), (HALF_CAT_HEIGHT + 
 
 score = 0
 
+
 def cat_random_position(light_center_x, light_center_y):
     light_center_x = int(light_center_x)
     light_center_y = int(light_center_y)
 
-    light_bound_left = light_center_x - SAFE_DISTANCE
-    light_bound_right = light_center_x + SAFE_DISTANCE
-    light_bound_bottom = light_center_y - SAFE_DISTANCE
-    light_bound_top = light_center_y + SAFE_DISTANCE
+    light_left_border = light_center_x - SAFE_DISTANCE
+    light_right_border = light_center_x + SAFE_DISTANCE
+    light_bottom_border = light_center_y - SAFE_DISTANCE
+    light_top_border = light_center_y + SAFE_DISTANCE
 
-    if light_bound_left > HALF_CAT_WIDTH:
-        random_x_left = randint(HALF_CAT_WIDTH, light_bound_left)
-    else:
-        random_x_left = randint(light_center_x + SAFE_DISTANCE, Window.width - HALF_CAT_WIDTH)
+    coordinates_x = []
+    coordinates_y = []
 
-    if light_bound_right < (Window.width - HALF_CAT_WIDTH):
-        random_x_right = randint(light_bound_right, Window.width - HALF_CAT_WIDTH)
-    else:
-        random_x_right = randint(HALF_CAT_WIDTH, light_center_x - SAFE_DISTANCE)
+    # Distance on the left from the light.
+    if light_left_border > HALF_CAT_WIDTH:
+        random_x_left = randint(HALF_CAT_WIDTH, light_left_border)
 
-    if light_bound_bottom > HALF_CAT_HEIGHT:
-        random_y_bottom = randint(HALF_CAT_HEIGHT, light_bound_bottom)
-    else:
-        random_y_bottom = randint(light_center_y + SAFE_DISTANCE, Window.height - HALF_CAT_HEIGHT)
+    # Distance on the right from the light.
+    if light_right_border < (Window.width - HALF_CAT_WIDTH):
+        random_x_right = randint(light_right_border, Window.width - HALF_CAT_WIDTH)
 
-    if light_bound_top < (Window.height - HALF_CAT_HEIGHT):
-        random_y_top = randint(light_bound_top, Window.height - HALF_CAT_HEIGHT)
-    else:
-        random_y_top = randint(HALF_CAT_HEIGHT, light_center_y - SAFE_DISTANCE)
+    # Distance on the bottom from the light.
+    if light_bottom_border > HALF_CAT_HEIGHT:
+        random_y_bottom = randint(HALF_CAT_HEIGHT, light_bottom_border)
 
-    random_x = choice([random_x_left, random_x_right])
-    random_y = choice([random_y_bottom, random_y_top])
+    # Distance on the top from the light.
+    if light_top_border < (Window.height - HALF_CAT_HEIGHT):
+        random_y_top = randint(light_top_border, Window.height - HALF_CAT_HEIGHT)
+
+    if 'random_x_left' in locals():
+        coordinates_x.append(random_x_left)
+
+    if 'random_x_right' in locals():
+        coordinates_x.append(random_x_right)
+
+    if 'random_y_bottom' in locals():
+        coordinates_y.append(random_y_bottom)
+
+    if 'random_y_top' in locals():
+        coordinates_y.append(random_y_top)
+
+    random_x = choice(coordinates_x)
+    random_y = choice(coordinates_y)
 
     return random_x, random_y
 
