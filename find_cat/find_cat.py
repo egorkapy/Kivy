@@ -16,19 +16,12 @@ Window.clearcolor = 1, 1, 1, 1
 
 WINDOW_WIDTH = 400
 WINDOW_HEIGHT = 600
-CAT_WIDTH = 95
-CAT_HEIGHT = 100
-HALF_CAT_WIDTH = CAT_WIDTH // 2
-HALF_CAT_HEIGHT = CAT_HEIGHT // 2
-RIGHT_WINDOW_BOUND = WINDOW_WIDTH - HALF_CAT_WIDTH
-TOP_WINDOW_BOUND = WINDOW_HEIGHT - HALF_CAT_HEIGHT
+HALF_CAT_WIDTH = 95 // 2
+HALF_CAT_HEIGHT = 100 // 2
 LIGHT_RADIUS = 50
 SAFE_DISTANCE = round(hypot((HALF_CAT_WIDTH + LIGHT_RADIUS), (HALF_CAT_HEIGHT + LIGHT_RADIUS))) + 10
 
 score = 0
-
-Window.size = WINDOW_WIDTH, WINDOW_HEIGHT
-
 
 def cat_random_position(light_center_x, light_center_y):
     light_center_x = int(light_center_x)
@@ -42,20 +35,20 @@ def cat_random_position(light_center_x, light_center_y):
     if light_bound_left > HALF_CAT_WIDTH:
         random_x_left = randint(HALF_CAT_WIDTH, light_bound_left)
     else:
-        random_x_left = randint(light_center_x + SAFE_DISTANCE, RIGHT_WINDOW_BOUND)
+        random_x_left = randint(light_center_x + SAFE_DISTANCE, Window.width - HALF_CAT_WIDTH)
 
-    if light_bound_right < RIGHT_WINDOW_BOUND:
-        random_x_right = randint(light_bound_right, RIGHT_WINDOW_BOUND)
+    if light_bound_right < (Window.width - HALF_CAT_WIDTH):
+        random_x_right = randint(light_bound_right, Window.width - HALF_CAT_WIDTH)
     else:
         random_x_right = randint(HALF_CAT_WIDTH, light_center_x - SAFE_DISTANCE)
 
     if light_bound_bottom > HALF_CAT_HEIGHT:
         random_y_bottom = randint(HALF_CAT_HEIGHT, light_bound_bottom)
     else:
-        random_y_bottom = randint(light_center_y + SAFE_DISTANCE, TOP_WINDOW_BOUND)
+        random_y_bottom = randint(light_center_y + SAFE_DISTANCE, Window.height - HALF_CAT_HEIGHT)
 
-    if light_bound_top < TOP_WINDOW_BOUND:
-        random_y_top = randint(light_bound_top, TOP_WINDOW_BOUND)
+    if light_bound_top < (Window.height - HALF_CAT_HEIGHT):
+        random_y_top = randint(light_bound_top, Window.height - HALF_CAT_HEIGHT)
     else:
         random_y_top = randint(HALF_CAT_HEIGHT, light_center_y - SAFE_DISTANCE)
 
