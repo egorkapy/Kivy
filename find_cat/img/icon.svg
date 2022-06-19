@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="82"
+   height="82"
+   viewBox="0.32101717 0.30000004 82.000003 82.000003"
+   version="1.1"
+   xml:space="preserve"
+   id="svg8536"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   inkscape:export-filename="C:\Users\egork\OneDrive\Рабочий стол\Проекты Python\Kivy\find_cat\img\icon.png"
+   inkscape:export-xdpi="599.41461"
+   inkscape:export-ydpi="599.41461"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs8540">
+          
+          
+          
+          
+          
+          
+        </defs><sodipodi:namedview
+   id="namedview8538"
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1.0"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   showgrid="false"
+   width="95.17898px"
+   inkscape:zoom="7.8167516"
+   inkscape:cx="42.728747"
+   inkscape:cy="36.076367"
+   inkscape:window-width="1920"
+   inkscape:window-height="986"
+   inkscape:window-x="-11"
+   inkscape:window-y="-11"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="costume1" />
+  <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+  <g
+   id="g8534">
+    <title
+   id="title8493">costume1.1</title>
+    <desc
+   id="desc8495">Created with Sketch.</desc>
+    <g
+   id="Page-1"
+   stroke="none"
+   fill-rule="evenodd">
+      <g
+   id="costume1">
+        <g
+   id="head"
+   transform="matrix(1.0061348,0,0,1.0085608,-13.76487,11.000107)">
+            <path
+   d="M 53.1,9 C 50.8,8.6 48.4,8.4 45.6,8.6 40.9,8.8 36.4,10.5 36.4,10.5 L 24.3,2.6 C 23.9,2.4 23.4,2.7 23.5,3.1 L 25.6,21 C 26.2,20.2 15,33.8 22.1,45.2 29.2,56.6 44.3,61.7 63.1,58 81.9,54.3 86.3,43.5 85.1,37.8 83.9,32.1 76.8,30 76.8,30 c 0,0 -0.1,-4.5 -3.3,-10 -1.9,-3.3 -8.3,-8 -8.3,-8 L 62.6,1.3 C 62.5,0.9 62,0.8 61.7,1 Z"
+   stroke="#001026"
+   stroke-width="1.2"
+   fill="#ffab19"
+   id="path8508" />
+            <path
+   d="m 76.5,30.4 c 0,0 6.9,1.8 8.1,7.5 1.2,5.7 -3.6,16 -22.2,19.6 -24.2,5 -35.7,-9.4 -29,-20 6.7,-10.7 18.2,-1.6 26.6,-2.2 7.2,-0.5 8,-6.8 16.5,-4.9 z"
+   id="face"
+   fill="#ffffff"
+   stroke-width="1" />
+            <path
+   d="m 45,41.1 c 0,-0.4 0.4,-0.7 0.8,-0.6 1.9,0.7 7.3,2.3 13.3,2.7 5.4,0.3 8.6,0 10.1,-0.3 0.5,-0.1 0.9,0.4 0.7,0.9 C 69,46.5 65.2,54 54.7,53.4 45.6,52.4 44.7,46 45,41.1 Z"
+   id="mouth"
+   stroke="#001026"
+   stroke-width="1.2"
+   fill="#ffffff"
+   stroke-linecap="round"
+   stroke-linejoin="round" />
+            <path
+   d="m 83,35.4 c 0,0 7.2,-0.1 11.9,-3.9"
+   id="whisker"
+   stroke="#001026"
+   stroke-width="1.2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   fill="none" />
+            <path
+   d="m 83.4,41.3 c 0,0 3.9,1.9 10.2,1.4"
+   id="path8513"
+   stroke="#001026"
+   stroke-width="1.2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   fill="none" />
+            <path
+   d="m 59.6,32.7 c 2.1,0 4.3,0.2 4.4,0.9 0.1,1.4 -1.4,4.2 -3,4.3 -1.8,0.2 -6,-2.3 -6,-3.9 -0.1,-1.2 2.6,-1.3 4.6,-1.3 z"
+   id="nose"
+   stroke="#001026"
+   stroke-width="1.2"
+   fill="#001026"
+   stroke-linecap="round"
+   stroke-linejoin="round" />
+            <path
+   d="m 14.6,31.2 c 0,0 8.6,2.8 12.1,5.9"
+   id="path8516"
+   stroke="#001026"
+   stroke-width="1.2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   fill="none" />
+            <path
+   d="m 15.3,41.2 c 0,0 7.4,1.1 11.7,-0.6"
+   id="path8518"
+   stroke="#001026"
+   stroke-width="1.2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   fill="none" />
+            <g
+   id="eye">
+              <path
+   d="m 71.4,21 c 2.9,4.5 3,9.6 0.2,11.4 -2.8,1.8 -7.4,-0.3 -10.4,-4.8 -2.9,-4.5 -3,-9.6 -0.2,-11.4 2.8,-1.9 7.5,0.3 10.4,4.8 z"
+   id="pupil"
+   stroke="#001026"
+   stroke-width="1.2"
+   fill="#ffffff"
+   stroke-linecap="round"
+   stroke-linejoin="round" />
+              <path
+   d="m 71,26.7 c 0,1.1 -0.8,2 -1.8,2 -1,0 -1.8,-0.9 -1.8,-2 0,-1.1 0.8,-2 1.8,-2 1,0 1.8,0.9 1.8,2"
+   id="path8521"
+   fill="#001026"
+   stroke-width="1" />
+            </g>
+            <g
+   id="g8528">
+              <path
+   d="m 46.6,23.8 c 3,4.4 2.8,9.8 0.1,11.7 C 43.4,37.4 39,36 36,31.6 32.9,27.2 32.7,21.5 35.8,19.3 c 3.1,-2.3 7.8,0.1 10.8,4.5 z"
+   stroke="#001026"
+   stroke-width="1.2"
+   fill="#ffffff"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   id="path8524" />
+              <path
+   d="m 46,29.6 c 0,1.1 -0.8,2 -1.8,2 -1,0 -1.8,-0.9 -1.8,-2 0,-1.1 0.8,-2 1.8,-2 1,0.1 1.8,0.9 1.8,2"
+   id="path8526"
+   fill="#001026"
+   stroke-width="1" />
+            </g>
+          </g>
+      </g>
+    </g>
+  </g>
+</svg>
