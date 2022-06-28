@@ -145,6 +145,7 @@ class GameApp(App):
 
     def build(self):
         self.title = 'Find the cat :)'
+        self.icon = 'img\icon64.png'
         self.layout = FloatLayout()
         self.sub_light = SubLight()
         self.light = Light(self.sub_light)

@@ -1,3 +1,5 @@
+import re
+
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -8,10 +10,12 @@ class MainApp(App):
 
     def build(self):
         self.operators = ["/", "*", "+", "-"]
+        self.exclusion_buttons = ['.']
         self.is_last_operator_button = None
         self.text_input = TextInput(
-            multiline=False, readonly=True, halign="right", font_size=55
+            multiline=False, readonly=True, halign="right", font_size=35
         )
+        FONT_SIZE = 20
         main_layout = BoxLayout(orientation="vertical")
         buttons = [
             ["7", "8", "9", "/"],
@@ -30,6 +34,7 @@ class MainApp(App):
                 button = Button(
                     text=label,
                     pos_hint={"center_x": 0.5, "center_y": 0.5},
+                    font_size=FONT_SIZE
                 )
                 button.bind(on_press=self.on_button_press)
                 h_layout.add_widget(button)
@@ -37,7 +42,7 @@ class MainApp(App):
             main_layout.add_widget(h_layout)
 
         equals_button = Button(
-            text="=", pos_hint={"center_x": 0.5, "center_y": 0.5}
+            text="=", pos_hint={"center_x": 0.5, "center_y": 0.5}, font_size=FONT_SIZE
         )
         equals_button.bind(on_press=self.on_solution)
         main_layout.add_widget(equals_button)
@@ -48,7 +53,16 @@ class MainApp(App):
         current_input_text = self.text_input.text
         button_text = instance.text
         new_input_text = current_input_text + button_text
-        is_operator_button = button_text in self.operators
+        is_operator_button = button_text in self.operators + self.exclusion_buttons
+        list_of_oregandy = re.split('|'.join(self.operators).replace('+', '\+').replace('*', '\*')
+                ,self.text_input.text)
+
+        if 10 < len(current_input_text) < 14:
+            self.text_input.font_size -= 3
+
+        for item in list_of_oregandy:
+            if len(item) >= 15 and not is_operator_button:
+                new_input_text = current_input_text.replace(item, item[:-1])
 
         if button_text == "C":
             self.text_input.text = ""
@@ -69,9 +83,9 @@ class MainApp(App):
 
     def on_solution(self, instance):
 
-        last_character = self.text_input.text[len(self.text_input.text) - 1]
-
         if self.text_input.text:
+            last_character = self.text_input.text[len(self.text_input.text) - 1]
+
             if last_character in self.operators:
                 self.text_input.text = self.text_input.text[:len(self.text_input.text) - 1]
 
@@ -83,6 +97,9 @@ class MainApp(App):
 
             except SyntaxError:
                 self.text_input.text = 'ERROR'
+
+            except NameError:
+                return
 
 
 MainApp().run()
