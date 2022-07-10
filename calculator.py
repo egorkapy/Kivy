@@ -54,6 +54,26 @@ class MainApp(App):
         button_text = instance.text
         new_input_text = current_input_text + button_text
         is_operator_button = button_text in self.operators + self.exclusion_buttons
+        list_of_operands = re.split('|'.join(self.operators).replace('+', '\+').replace('*', '\*')
+                                    , new_input_text)
+
+        if 10 < len(current_input_text) < 14:
+            self.text_input.font_size -= 3
+
+        for operand in list_of_operands:
+            print(list_of_operands)
+
+            if len(operand) >= 15 and not is_operator_button:
+                new_input_text = current_input_text.replace(operand, operand[:-1] + operand[-1])
+
+            index = list_of_operands.index(operand) + \
+                    ((col_same_elements := list_of_operands.count(operand)) - (col_same_elements - 1))
+
+            if index < 0:
+                index = 0
+
+            if is_operator_button and len(operand) >= 14 and index != 0:
+                new_input_text += '\n'
 
         if button_text == "C":
             self.text_input.text = ''
@@ -74,7 +94,6 @@ class MainApp(App):
         self.is_last_operator_button = is_operator_button
 
     def on_solution(self, instance):
-
         if self.text_input.text:
             last_character = self.text_input.text[len(self.text_input.text) - 1]
 
