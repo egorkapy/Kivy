@@ -70,9 +70,6 @@ def cat_random_position(light_center_x, light_center_y):
     return random_x, random_y
 
 
-Builder.load_file('sprites.kv')
-
-
 class SvgWidget(Scatter):
 
     def __init__(self, filename, **kwargs):
@@ -144,6 +141,8 @@ class Cat(SvgWidget):
 class GameApp(App):
 
     def build(self):
+        Builder.load_file('sprites.kv')
+
         self.title = 'Find the cat :)'
         self.icon = 'img\icon64.png'
         self.layout = FloatLayout()
