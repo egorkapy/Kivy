@@ -54,18 +54,30 @@ class MainApp(App):
         button_text = instance.text
         new_input_text = current_input_text + button_text
         is_operator_button = button_text in self.operators + self.exclusion_buttons
-        list_of_oregandy = re.split('|'.join(self.operators).replace('+', '\+').replace('*', '\*')
-                ,self.text_input.text)
+        list_of_operands = re.split('|'.join(self.operators).replace('+', '\+').replace('*', '\*')
+                                    , self.text_input.text)
 
         if 10 < len(current_input_text) < 14:
             self.text_input.font_size -= 3
 
-        for item in list_of_oregandy:
-            if len(item) >= 15 and not is_operator_button:
-                new_input_text = current_input_text.replace(item, item[:-1])
+        for operand in list_of_operands:
+            print(list_of_operands)
+
+            if len(operand) >= 15 and not is_operator_button:
+                new_input_text = current_input_text.replace(operand, operand[:-1] + operand[-1])
+
+            index = list_of_operands.index(operand) + \
+                    ((col_same_elements := list_of_operands.count(operand)) - (col_same_elements - 1))
+
+            if index < 0:
+                index = 0
+
+            if is_operator_button and len(operand) >= 14 and index != 0:
+                new_input_text += '\n'
 
         if button_text == "C":
-            self.text_input.text = ""
+            self.text_input.text = ''
+            self.text_input.font_size = 35
 
         else:
             # Не добавляет два оператора подряд
@@ -89,8 +101,10 @@ class MainApp(App):
             if last_character in self.operators:
                 self.text_input.text = self.text_input.text[:len(self.text_input.text) - 1]
 
+            self.text_input.font_size = 35
+
             try:
-                self.text_input.text = str(eval(self.text_input.text))
+                self.text_input.text = str(eval(self.text_input.text.replace('\n', '')))
 
             except ZeroDivisionError:
                 self.text_input.text = 'YOU CAN\'T DIVIDE BY ZERO!'
