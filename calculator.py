@@ -54,17 +54,9 @@ class MainApp(App):
         button_text = instance.text
         new_input_text = current_input_text + button_text
         is_operator_button = button_text in self.operators + self.exclusion_buttons
-        list_of_operands = re.split('|'.join(self.operators).replace('+', '\+').replace('*', '\*')
-                                    , self.text_input.text)
 
         if 10 < len(current_input_text) < 14:
             self.text_input.font_size -= 3
-
-        for operand in list_of_operands:
-            print(list_of_operands)
-
-            if len(operand) >= 15 and not is_operator_button:
-                new_input_text = current_input_text.replace(operand, operand[:-1])
 
         if button_text == "C":
             self.text_input.text = ''
