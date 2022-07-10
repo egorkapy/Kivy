@@ -55,9 +55,6 @@ class MainApp(App):
         new_input_text = current_input_text + button_text
         is_operator_button = button_text in self.operators + self.exclusion_buttons
 
-        if 10 < len(current_input_text) < 14:
-            self.text_input.font_size -= 3
-
         if button_text == "C":
             self.text_input.text = ''
             self.text_input.font_size = 35
