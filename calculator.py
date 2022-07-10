@@ -64,16 +64,7 @@ class MainApp(App):
             print(list_of_operands)
 
             if len(operand) >= 15 and not is_operator_button:
-                new_input_text = current_input_text.replace(operand, operand[:-1] + operand[-1])
-
-            index = list_of_operands.index(operand) + \
-                    ((col_same_elements := list_of_operands.count(operand)) - (col_same_elements - 1))
-
-            if index < 0:
-                index = 0
-
-            if is_operator_button and len(operand) >= 14 and index != 0:
-                new_input_text += '\n'
+                new_input_text = current_input_text.replace(operand, operand[:-1])
 
         if button_text == "C":
             self.text_input.text = ''
