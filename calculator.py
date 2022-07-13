@@ -72,7 +72,7 @@ class MainApp(App):
             if index < 0:
                 index = 0
 
-            if is_operator_button and len(operand) >= 14 and index != 0:
+            if is_operator_button and len(operand) >= 14 and index != 0 and not('\n' in operand):
                 new_input_text += '\n'
 
         if button_text == "C":
