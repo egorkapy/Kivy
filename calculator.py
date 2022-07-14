@@ -97,10 +97,10 @@ class MainApp(App):
 
     def on_solution(self, instance):
         if self.text_input.text:
-            last_character = self.text_input.text[len(self.text_input.text) - 1]
+            last_character = self.text_input.text[-1]
 
             if last_character in self.operators:
-                self.text_input.text = self.text_input.text[:len(self.text_input.text) - 1]
+                self.text_input.text = self.text_input.text[:-1]
 
             self.text_input.font_size = 35
 
