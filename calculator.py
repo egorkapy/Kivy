@@ -61,7 +61,6 @@ class MainApp(App):
             self.text_input.font_size -= 3
 
         for operand in list_of_operands:
-            print(list_of_operands)
 
             if len(operand) >= 15 and not is_operator_button:
                 new_input_text = current_input_text.replace(operand, operand[:-1] + operand[-1])
@@ -72,8 +71,11 @@ class MainApp(App):
             if index < 0:
                 index = 0
 
-            if is_operator_button and len(operand) >= 14 and index != 0 and not('\n' in operand):
+            if is_operator_button and len(operand) >= 10 and index != 0 and not('\n' in operand):
                 new_input_text += '\n'
+
+            if operand == ('0' + button_text):
+                new_input_text = new_input_text[:-1]
 
         if button_text == "C":
             self.text_input.text = ''
