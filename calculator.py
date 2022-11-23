@@ -13,7 +13,7 @@ class MainApp(App):
         self.exclusion_buttons = ['.']
         self.is_last_operator_button = None
         self.text_input = TextInput(
-            multiline=False, readonly=True, halign="right", font_size=35
+            multiline=True, readonly=True, halign="right", font_size=35
         )
         FONT_SIZE = 20
         main_layout = BoxLayout(orientation="vertical")
@@ -64,18 +64,6 @@ class MainApp(App):
 
             if len(operand) >= 15 and not is_operator_button:
                 new_input_text = current_input_text.replace(operand, operand[:-1] + operand[-1])
-
-            index = list_of_operands.index(operand) + \
-                    ((col_same_elements := list_of_operands.count(operand)) - (col_same_elements - 1))
-
-            if index < 0:
-                index = 0
-
-            if is_operator_button and len(operand) >= 10 and index != 0 and not('\n' in operand):
-                new_input_text += '\n'
-
-            if operand == ('0' + button_text):
-                new_input_text = new_input_text[:-1]
 
         if button_text == "C":
             self.text_input.text = ''

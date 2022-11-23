@@ -1,6 +1,7 @@
 from random import randint, choice
 from kivy.app import App
-from kivy.graphics.svg import Svg
+# from kivy.graphics.svg import Svg
+from kivy.uix.image import Image, AsyncImage
 from kivy.uix.label import Label
 from kivy.uix.scatter import Scatter
 from kivy.uix.floatlayout import FloatLayout
@@ -19,7 +20,7 @@ WINDOW_HEIGHT = 600
 HALF_CAT_WIDTH = 95 // 2
 HALF_CAT_HEIGHT = 100 // 2
 LIGHT_RADIUS = 50
-SAFE_DISTANCE = round(hypot((HALF_CAT_WIDTH + LIGHT_RADIUS), (HALF_CAT_HEIGHT + LIGHT_RADIUS))) + 10
+SAFE_DISTANCE = round(hypot((HALF_CAT_WIDTH + LIGHT_RADIUS), (HALF_CAT_HEIGHT + LIGHT_RADIUS)))
 
 score = 0
 
@@ -70,21 +71,6 @@ def cat_random_position(light_center_x, light_center_y):
     return random_x, random_y
 
 
-class SvgWidget(Scatter):
-
-    def __init__(self, filename, **kwargs):
-        super(SvgWidget, self).__init__(**kwargs)
-
-        self.do_translation = False
-        self.do_scale = False
-        self.do_rotation = False
-
-        with self.canvas:
-            svg = Svg(filename)
-
-        self.size = svg.width, svg.height
-
-
 class Light(Scatter):
     diameter = LIGHT_RADIUS * 2
 
@@ -109,14 +95,15 @@ class SubLight(Widget):
         self.center_x, self.center_y = (touch.x, touch.y)
 
 
-class Cat(SvgWidget):
+class Cat(Image):
     cats = list()
 
     def __init__(self, filename, sub_light, score_label, **kwargs):
-        super(Cat, self).__init__(filename, **kwargs)
+        super(Cat, self).__init__(**kwargs)
 
         self.sub_light = sub_light
         self.score_label = score_label
+        self.source = filename
 
         Cat.cats.append(self)
 
@@ -154,7 +141,7 @@ class GameApp(App):
         self.layout.add_widget(self.sub_light)
 
         for cat_id in range(1, 4):
-            cat = Cat('./img/black_cat.svg', self.sub_light, self.score_label, size_hint=(None, None))
+            cat = Cat('./img/black_cat_test.png', self.sub_light, self.score_label, size_hint=(None, None))
             self.layout.add_widget(cat)
             cat.scale = 1
             cat.center = cat_random_position(self.sub_light.center_x, self.sub_light.center_y)

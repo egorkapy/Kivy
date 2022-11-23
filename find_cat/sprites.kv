@@ -1,7 +1,3 @@
-<SvgWidget>:
-    do_scale: False
-    do_rotation: False
-
 <Light>:
     do_rotation: False
     do_scale: False
@@ -11,7 +7,7 @@
     canvas:
         Ellipse:
             source: './img/light.png'
-            size:self.size
+            size: self.size
 
 <SubLight>:
     pos: root.width/2, root.height/2
@@ -20,6 +16,7 @@
     canvas:
         Color:
             rgb: 1,0,0
-        Ellipse:
+        Rectangle:
+#        Ellipse:
             pos: self.pos
             size:self.size
